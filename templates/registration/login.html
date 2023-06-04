@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+<!-- contenido del titulo -->
+{% block title %}
+Login
+{% endblock title %}
+<!-- fin contenido del titulo -->
+
+
+
+<!-- titulo -->
+{% block titulo %}
+<h1>Vitacora Cenabast</h1>
+{% endblock titulo %}
+<!-- fin titulo -->
+
+
+
+{% block content %}
+<div class="col-5">
+    {% if form.errors %}
+    <p style="color: red">
+        Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo..
+    </p>
+    {% endif %}
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p style="color: red">
+        Su cuenta no tiene acceso a esta página. Para proceder, por favor inicie
+        sesión con una cuenta que tenga acceso.
+    </p>
+    {% else %}
+    <p style="color: red">Por favor inicie sesión para ver esta página.</p>
+    {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %} {{form|crispy}}
+        <div>
+            <input type="submit" class="btn btn-primary" value="Ingresar" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+    </form>
+
+
+{% endblock content %}
+
+{% block recuperacion %}
+    <p><a href="{% url 'password_reset' %}">Recuperar Contraseña !!!</a></p>
+    <div style="text-align: justify;" class="fs-4">
+    <p>
+{% endblock recuperacion %}
+
+
+
